@@ -24,6 +24,36 @@ DB Context:
 
 """
 
+async def main2(query):
+    
+    kernel = await initialize_kernel()
+
+    # Define a semantic function (prompt) to generate a TL;DR summary
+    final_answer_fn = kernel.add_function(
+        prompt=prompt_template, 
+        function_name="db_answer", 
+        plugin_name="db_helper"
+    )
+
+    # Initialize the step tracker
+    tracker = get_tracker()
+    
+    # Start tracking the whole process
+    tracker.start_step("MainProcess", {"query": query})
+
+    # Execute the SQL process
+    sql_process = SqlProcess(kernel)
+    await sql_process.start(query)    
+    
+    sql_result = "No response found."
+    if os.path.exists("output_prompts/generated-sql.txt"):
+        with open("output_prompts/generated-sql.txt", "r") as f:
+            sql_result = f.read()
+
+    console.print(sql_result)
+    
+    return sql_result
+
 async def main():
     # Get query from command line argument
     if len(sys.argv) < 2:
