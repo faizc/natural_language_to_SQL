@@ -38,3 +38,5 @@ backend/.env
 
 # Vite specific
 *.local
+
+toolkit/data
