@@ -41,6 +41,7 @@ class SQLGenerationStep(KernelProcessStep):
                     relevant_tables.append({
                         'TableName': model_table['TableName'],
                         'Description': model_table['Description'],
+                        'Domain': model_table['Domain'],
                         'Columns': relevant_columns
                         }
                     )

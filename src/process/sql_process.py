@@ -16,7 +16,8 @@ from src.steps import (
     SQLGenerationStep,
     BusinessRulesStep,
     ValidationStep,
-    ExecutionStep
+    ExecutionStep,
+    ExecutionStepSQL,
 )
 from src.utils.step_tracker import get_tracker
 from rich.console import Console
@@ -79,8 +80,8 @@ class SqlProcess():
         print("Added BusinessRulesStep to process.")
         validation_step = process.add_step(ValidationStep)
         print("Added ValidationStep to process.")
-        execution_step = process.add_step(ExecutionStep)
-        print("Added ExecutionStep to process.")
+        execution_step = process.add_step(ExecutionStepSQL)
+        print("Added ExecutionStepSQL to process.")
 
         # Define the process flow by connecting events to steps
         print("Defining process flow...")
@@ -120,7 +121,7 @@ class SqlProcess():
         validation_step.on_event(event_id=SQLEvents.ValidationPassed).send_event_to(
             target=execution_step, parameter_name="data"
         )
-        print("Configured process flow: ValidationPassed -> ExecutionStep.")
+        print("Configured process flow: ValidationPassed -> ExecutionStepSQL.")
         
         validation_step.on_event(event_id=SQLEvents.ValidationFailed).send_event_to(
             target=sql_generation_step, parameter_name="data"

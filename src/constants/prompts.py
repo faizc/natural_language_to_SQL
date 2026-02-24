@@ -125,6 +125,8 @@ You are an advanced SQL query generator. Your task is to transform the following
 ## Tables and Columns Selected through previous generation rounds:
 {suggested_table_column_names}
 
+## Use the DOMAIN as the from table - if the tablename is AM and the domain is AssetManager - e.g select * from AssetManager and do not put any double quotes around the table name, and do not use the actual table name in the FROM clause, but rather use the domain name. This is a very important point to ensure that the SQL query is compatible with the SQL dialect of AzSQL/SQLServer DATABASE, and to avoid any issues with reserved keywords or special characters in the table names. Always use the DOMAIN as the from table.
+
 **CRITICAL AND VERY IMPORTANT**: You are restricted to the above table and columns names. You **MUST NOT** invent new tables or columns. You **MUST** use the above table and column names to generate the SQL query.
 ---
 
@@ -140,7 +142,7 @@ You are an advanced SQL query generator. Your task is to transform the following
 
 The query **MUST COMPLY** with the following conditions:
 - **Be fully functional** for answering the user's question using the provided schema.
-- The SQL query must be compatible with the SQL dialect of **SQLITE DATABASE**
+- The SQL query must be compatible with the SQL dialect of **AzSQL or SQLServer DATABASE**
 - **You MUST respect the described Business Rules** to generate the SQL query.
 - **Do not invent tables, columns, or relationships** that do not exist in the schema.
 - Some columns contain exact enumerated values that must be used precisely, selecting the best semantic match from the user's question.
@@ -227,7 +229,7 @@ You **MUST** validate the SQL Query against the user question. If the user is as
 
 You **MUST** ensure that each column in the SQL statement belongs to the right table. You **MUST** ensure that each column is used in the right context. You **MUST** ensure that each column is used with the right alias. You **MUST** ensure that each column is used with the right aggregation function.
 
-The SQL query must be compatible with the SQL dialect of **SQLITE DATABASE**.
+The SQL query must be compatible with the SQL dialect of **AzSQL or SQLServer DATABASE**.
 
 **VERY IMPORTANT**: When validating the SQL statement, do not generate an issue unless absolutely necessary, and you know for sure that there is a structural or fundamental problem with the query. If you are not sure, or if the issue is minor, then do not generate an issue.
 
@@ -257,11 +259,11 @@ few_shot_examples ="""
 
 ### Example #1
 User Query: from which counties do our providers come from?
-Generated Query: SELECT DISTINCT G.COUNTY FROM D_HC_Providers_v3 AS P JOIN D_HC_Geography_v3 AS G ON P.ZIP_CODE = G.ZIP_CODE;
+Generated Query: SELECT DISTINCT G.COUNTY FROM DATABASE.SCHEMA.D_HC_Providers_v3 AS P JOIN D_HC_Geography_v3 AS G ON P.ZIP_CODE = G.ZIP_CODE;
 
 # ### Example #2
 # User Query: Find the medication adherence level distribution for elderly patients (age 65+)
-# Generated Query: SELECT PMS.ADHERENCE_LEVEL, COUNT(DISTINCT PDS.PATIENT_ID) AS PATIENT_COUNT FROM HC_Patient_Daily_Summary_v3 AS PDS JOIN HC_Patient_Medication_Summary_v3 AS PMS ON PDS.PATIENT_ID = PMS.PATIENT_ID WHERE PDS."INSURANCE_REC.PATIENT_AGE_GROUP_CD" = \'65+\' GROUP BY PMS.ADHERENCE_LEVEL;
+# Generated Query: SELECT PMS.ADHERENCE_LEVEL, COUNT(DISTINCT PDS.PATIENT_ID) AS PATIENT_COUNT FROM DATABASE.SCHEMA.HC_Patient_Daily_Summary_v3 AS PDS JOIN HC_Patient_Medication_Summary_v3 AS PMS ON PDS.PATIENT_ID = PMS.PATIENT_ID WHERE PDS."INSURANCE_REC.PATIENT_AGE_GROUP_CD" = \'65+\' GROUP BY PMS.ADHERENCE_LEVEL;
 
 """
 # ### Example #2

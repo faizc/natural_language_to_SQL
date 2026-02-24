@@ -24,6 +24,16 @@ DB Context:
 
 """
 
+async def main():
+    # Get query from command line argument
+    if len(sys.argv) < 2:
+        console.print("[red]Error: Please provide a query as a command line argument[/red]")
+        console.print("Usage: python src/main.py \"your natural language query here\"")
+        sys.exit(1)
+        
+    query = sys.argv[1]
+    await main2(query)
+
 async def main2(query):
     
     kernel = await initialize_kernel()
@@ -54,7 +64,7 @@ async def main2(query):
     
     return sql_result
 
-async def main():
+async def main_actual():
     # Get query from command line argument
     if len(sys.argv) < 2:
         console.print("[red]Error: Please provide a query as a command line argument[/red]")
