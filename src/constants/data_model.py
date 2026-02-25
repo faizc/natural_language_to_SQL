@@ -1361,7 +1361,7 @@ global_database_model = [
             },
             {
                 "ColumnName": "RECORD_NUMBER",
-                "Description": NaN,
+                "Description": "record number - some number",
                 "DataType": "Number"
             },
             {
