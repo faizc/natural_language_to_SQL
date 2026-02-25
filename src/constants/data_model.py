@@ -1,23 +1,33 @@
 table_descriptions = [
     {
         "TableName": "AM",
-        "Description": "Asset Management",
+        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle",
         "Domain": "[AMDATA].[dbo].[con_am_asset_lifecycle]"
     },
     {
         "TableName": "Monitoring",
-        "Description": "Monitoring",
-        "Domain": "Monitoring"
+        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization.",
+        "Domain": "[Monitoring].[dbo].[Monitoring]"
     },
     {
         "TableName": "BKP_Inventory",
-        "Description": "Backup Inventory Information",
-        "Domain": "BKP_Inventory"
+        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments.",
+        "Domain": "[BKP_Inventory].[dbo].[BKP_Inventory]"
     },
     {
         "TableName": "BKP_Logs",
-        "Description": "Backup Inventory Log Information",
-        "Domain": "BKP_Logs"
+        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information",
+        "Domain": "[BKP_Logs].[dbo].[BKP_Logs]"
+    },
+    {
+        "TableName": "SLA_ClosedTKT",
+        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization.",
+        "Domain": "[HPSM_Tickets].[dbo].[SLA_ClosedTKT]"
+    },
+    {
+        "TableName": "CR_Asset",
+        "Description": "Change Management tickets which contains CI names",
+        "Domain": "[HPSM_Tickets].[dbo].[CR_Asset]"
     }
 ]
 
@@ -31,8 +41,8 @@ json_rules = """
 global_database_model = [
     {
         "TableName": "AM",
-        "Description": "Asset Management",
         "Domain": "[AMDATA].[dbo].[con_am_asset_lifecycle]",
+        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle",
         "Columns": [
             {
                 "ColumnName": "lPortfolioItemId",
@@ -408,8 +418,8 @@ global_database_model = [
     },
     {
         "TableName": "Monitoring",
-        "Description": "Monitoring",
-        "Domain": "Monitoring",
+        "Domain": "[Monitoring].[dbo].[Monitoring]",
+        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization.",
         "Columns": [
             {
                 "ColumnName": "dsi_key_id",
@@ -580,8 +590,8 @@ global_database_model = [
     },
     {
         "TableName": "BKP_Inventory",
-        "Description": "Backup Inventory Information",
-        "Domain": "BKP_Inventory",
+        "Domain": "[BKP_Inventory].[dbo].[BKP_Inventory]",
+        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments.",
         "Columns": [
             {
                 "ColumnName": "MasterServer",
@@ -652,8 +662,8 @@ global_database_model = [
     },
     {
         "TableName": "BKP_Logs",
-        "Description": "Backup Inventory Log Information",
-        "Domain": "BKP_Logs",
+        "Domain": "[BKP_Logs].[dbo].[BKP_Logs]",
+        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information",
         "Columns": [
             {
                 "ColumnName": "jobId",
@@ -989,6 +999,380 @@ global_database_model = [
                 "ColumnName": "acceleratorOptimization",
                 "Description": "Accelerator optimization percentage; 0 = no optimization, NULL if N/A",
                 "DataType": "Number (%)"
+            }
+        ]
+    },
+    {
+        "TableName": "SLA_ClosedTKT",
+        "Domain": "[HPSM_Tickets].[dbo].[SLA_ClosedTKT]",
+        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization.",
+        "Columns": [
+            {
+                "ColumnName": "INCIDENT_ID",
+                "Description": "Unique Service Desk ticket identifier (SD prefix)",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "SD_OPEN_TIME",
+                "Description": "Timestamp when the Service Desk ticket was created/logged",
+                "DataType": "DateTime"
+            },
+            {
+                "ColumnName": "DEPEND",
+                "Description": "Linked Incident/IM/RF number if this SD ticket was created from an escalation; NULL if standalone",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "CONTACT_NAME",
+                "Description": "Name of the user/entity who raised the ticket (person or RO store name)",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "NUMBER",
+                "Description": "Original IM (Incident Management) number if different from INCIDENT_ID; NULL for self-service",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "OPEN_TIME",
+                "Description": "Timestamp when the Service Desk ticket was created/logged",
+                "DataType": "DateTime"
+            },
+            {
+                "ColumnName": "SEVERITY",
+                "Description": "Ticket severity level (1=Critical, 2=High, 3=Medium, 4=Low), But we are not using this field for Priority .   There is a separate field names 'Priority' ",
+                "DataType": "Number (1-4)"
+            },
+            {
+                "ColumnName": "NETWORK_CONNECTVITY",
+                "Description": "Type of network connection at user's location at time of issue; NULL if not applicable",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "LOCATION",
+                "Description": "Location/store code of the affected user or site; NULL for non-site tickets",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "STORE_FORMAT_RIL",
+                "Description": "Store format classification for Petro Retail outlets; NULL for non-retail tickets",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "CATEGORY",
+                "Description": "Top-level ticket type classification",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "OPEN",
+                "Description": "Current open/closed status of the ticket",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "CLOSED_BY",
+                "Description": "User/system that closed the ticket",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "COMPANY",
+                "Description": "Company/entity owning the ticket; NULL for Enterprise IT tickets",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "OPENED_BY",
+                "Description": "Login ID or email through which the ticket was opened",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "SUBCATEGORY",
+                "Description": "Sub-classification of the ticket category (technical area)",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "PRODUCT_TYPE",
+                "Description": "Specific product/technology involved in the ticket",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "PROBLEM_TYPE",
+                "Description": "Nature/type of the specific problem reported",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "TITLE",
+                "Description": "Short title/summary of the ticket",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "RSOL_BREACHENTITY",
+                "Description": "Business entity against which SLA breach is tracked; NULL if not applicable",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "DESCRIPTION",
+                "Description": "Detailed description of the issue provided by the user or system",
+                "DataType": "Text (Long)"
+            },
+            {
+                "ColumnName": "RESOLUTION",
+                "Description": "Resolution steps taken and outcome; NULL if auto-resolved without notes",
+                "DataType": "Text (Long)"
+            },
+            {
+                "ColumnName": "PRIORITY_CODE",
+                "Description": "Priority code of the ticket (mirrors severity in most cases)",
+                "DataType": "Number (1-4)"
+            },
+            {
+                "ColumnName": "ASSIGNEE",
+                "Description": "Login ID of the person/team the ticket was assigned to for resolution",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "PROB_ASSIGNMENT",
+                "Description": "Assignment group/queue where the ticket was routed",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "ASSIGNEE_NAME",
+                "Description": "Display name of the assignee (same as ASSIGNEE in most cases)",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "IM_PRIORITY_CODE",
+                "Description": "Priority code of the related Incident Management record",
+                "DataType": "Number (1-4)"
+            },
+            {
+                "ColumnName": "HANDLE_TIME",
+                "Description": "Time taken to handle/resolve the ticket in DateTime format (4000-01-01 = base date offset)",
+                "DataType": "DateTime"
+            },
+            {
+                "ColumnName": "CRITICAL_USER",
+                "Description": "Flag indicating if the affected user is a critical/VIP user; NULL if unknown",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "RESOLUTION_CODE",
+                "Description": "Standardized resolution outcome code",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "CONTACT_EMAIL",
+                "Description": "Email address of the contact/affected user",
+                "DataType": "Email"
+            },
+            {
+                "ColumnName": "RIL_CITY",
+                "Description": "City of the affected user/site; NULL if not captured",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "RIL_STATE",
+                "Description": "State of the affected user/site; NULL if not captured",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "DEPT",
+                "Description": "Department of the affected user; NULL if not captured or auto-resolved",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "REOPENCOUNT",
+                "Description": "Number of times the ticket was reopened after initial closure; NULL for auto-resolved",
+                "DataType": "Number"
+            },
+            {
+                "ColumnName": "RIL_KM",
+                "Description": "Knowledge Management article number used to resolve; NULL if no KM article applied",
+                "DataType": "Number"
+            },
+            {
+                "ColumnName": "APPROVAL_STATUS",
+                "Description": "Approval workflow status for service catalog items; NULL for incidents/SR",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "PROB_CATEGORY",
+                "Description": "Category mapped in the Problem Management module; NULL if not linked",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "PROB_SUBCATEGORY",
+                "Description": "Subcategory in Problem Management; NULL if not linked",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "IM_STATUS",
+                "Description": "Status of the related Incident Management record",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "RILRESOLVEDTIME",
+                "Description": "Timestamp when the ticket was resolved/closed",
+                "DataType": "DateTime"
+            },
+            {
+                "ColumnName": "IM_NETWORK_CONNECTVITY",
+                "Description": "Network connectivity at time of IM resolution (may differ from original); NULL if unchanged",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "BUSINESSENTITY",
+                "Description": "Business entity/vertical the ticket belongs to",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "VIP_USER",
+                "Description": "VIP user flag; NULL if not classified",
+                "DataType": "Text (t/f/NULL)"
+            },
+            {
+                "ColumnName": "VVIP",
+                "Description": "Very VIP user flag; NULL if not classified",
+                "DataType": "Text (t/f/NULL)"
+            },
+            {
+                "ColumnName": "RIL_KB",
+                "Description": "Knowledge Base article reference; NA for self-service; NULL if not used",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "SATISFY_OVERALL",
+                "Description": "Customer satisfaction: overall rating; NULL if survey not completed",
+                "DataType": "Number (1-5)"
+            },
+            {
+                "ColumnName": "SATISFY_SPEED",
+                "Description": "Customer satisfaction: speed of resolution rating",
+                "DataType": "Number (1-5)"
+            },
+            {
+                "ColumnName": "SATISFY_COMMUNICATION",
+                "Description": "Customer satisfaction: communication quality rating",
+                "DataType": "Number (1-5)"
+            },
+            {
+                "ColumnName": "SATISFY_SKILLSET",
+                "Description": "Customer satisfaction: agent skillset rating",
+                "DataType": "Number (1-5)"
+            },
+            {
+                "ColumnName": "SURVEYCOMMENTS",
+                "Description": "Free text comments from customer satisfaction survey",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "ESS_ENTRY",
+                "Description": "Employee Self-Service entry flag; t = raised via self-service portal",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "ASSIGNMENT",
+                "Description": "Final assignment group/team that resolved the ticket",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "Log_mode",
+                "Description": "Channel/mode through which the ticket was originally logged",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "LOG_MODE_new",
+                "Description": "Normalized/standardized log mode classification",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "Req_NUMBER",
+                "Description": "Request fulfillment number for service catalog items; NULL for incidents/SR",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "Req_SLA_BREACH",
+                "Description": "Flag indicating if the request SLA was breached; NULL if not applicable",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "Response_sla",
+                "Description": "Flag indicating if the response SLA was met (f = met, t = breached)",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "Resolution_sla",
+                "Description": "Flag indicating if the resolution SLA was met (f = met, t = breached)",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "d_Total_Time",
+                "Description": "Derived Field - Total time taken to resolve the ticket. from open to close in human-readable format",
+                "DataType": "Text (Duration)"
+            },
+            {
+                "ColumnName": "Days_Diff",
+                "Description": "Total calendar days from ticket open to close",
+                "DataType": "Number"
+            },
+            {
+                "ColumnName": "SBD",
+                "Description": "Whether the ticket was resolved within SBD (Service Business Days); Yes = within SLA",
+                "DataType": "Text (Yes/No)"
+            },
+            {
+                "ColumnName": "additionalsoftwarerequired",
+                "Description": "Flag indicating if additional software was required to resolve; NULL if not applicable",
+                "DataType": "Text (t/f)"
+            },
+            {
+                "ColumnName": "VENDOR",
+                "Description": "Vendor involved in resolution (for hardware/dispenser issues); NULL if no vendor",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "OVERALL_EXPERIANCE",
+                "Description": "Free text or rating from overall experience feedback",
+                "DataType": "Text"
+            }
+        ]
+    },
+    {
+        "TableName": "CR_Asset",
+        "Domain": "[HPSM_Tickets].[dbo].[CR_Asset]",
+        "Description": "Change Management tickets which contains CI names",
+        "Columns": [
+            {
+                "ColumnName": "cm2rm1_NUMBER",
+                "Description": "Unique Change Management ticket identifier (C prefix)",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "CATEGORY",
+                "Description": "Type/category of the change request",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "REQSTARTDATE",
+                "Description": "Requested start date and time for the change window/maintenance activity",
+                "DataType": "DateTime"
+            },
+            {
+                "ColumnName": "cmra3_NUMBER",
+                "Description": "same as row no. 1",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "RECORD_NUMBER",
+                "Description": NaN,
+                "DataType": "Number"
+            },
+            {
+                "ColumnName": "ASSETS",
+                "Description": "Configuration Item (CI) identifier from the CMDB linked to the change",
+                "DataType": "Text"
+            },
+            {
+                "ColumnName": "DISPLAY_NAME",
+                "Description": "Hostname of the CI asset being changed",
+                "DataType": "Text"
             }
         ]
     }

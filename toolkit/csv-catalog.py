@@ -20,6 +20,14 @@ def populate_table_info(df):
         tableDesc.append({'TableName':row.TableName,'Description':row.Description,'Domain':row.Domain})
     return tableDesc    
 
+def get_table_domain(table_info, tablename):
+    table_domain = None
+    for table in table_info:
+        if table["TableName"] == tablename:
+            table_domain = table["Domain"]
+            break  
+    return table_domain 
+
 def get_table_desc(table_info, tablename):
     table_comment = None
     for table in table_info:
@@ -34,7 +42,7 @@ def populate_column_info(df, table_info, tablename, globalStructure):
     for row in df.itertuples(index=False):
         columnDesc.append({'ColumnName':row.ColumnName,'Description':row.Description, 'DataType':row.DataType})
     # Add the last column description array to the global structure. 
-    globalStructure.append({'TableName':tablename, 'Description':get_table_desc(table_info, tablename), 'Columns':columnDesc})
+    globalStructure.append({'TableName':tablename,'Domain':get_table_domain(table_info, tablename), 'Description':get_table_desc(table_info, tablename), 'Columns':columnDesc})
 
     return globalStructure
 
