@@ -21,7 +21,9 @@ class ValidTableName(BaseModel):
         'AM',
         'Monitoring',
         'BKP_Inventory',
-        'BKP_Logs'
+        'BKP_Logs',
+        'SLA_ClosedTKT',
+        'CR_Asset'
         ]
 
 
