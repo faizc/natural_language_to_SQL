@@ -32,13 +32,14 @@ class ExecutionStepSQL(KernelProcessStep):
             database = os.environ.get("SQL_SERVER_DATABASE")
             username = os.environ.get("SQL_SERVER_USERNAME")
             password = os.environ.get("SQL_SERVER_PASSWORD")
+            driver = os.environ.get("SQL_SERVER_DRIVER", "{SQL Server}")
 
             conn_str = (
-                f'Driver={{SQL Server}};'
+                f'Driver={driver};'
                 f'Server={server};'
                 f'Database={database};'
                 f'UID={username};'
-                f'PWD={password};'
+                f'PWD={password};TrustServerCertificate=yes;'
             )
             response = None
             columns = []
