@@ -1,33 +1,33 @@
 table_descriptions = [
     {
         "TableName": "AM",
-        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle",
+        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle. This is the central tables and other tables revolve around it. 'lPortfolioItemId' is unique value for asset but for joining with monitoring we need the 'hostname' column.",
         "Domain": "[AMDATA].[dbo].[con_am_asset_lifecycle]"
     },
     {
         "TableName": "Monitoring",
-        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization.",
-        "Domain": "[Monitoring].[dbo].[Monitoring]"
+        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization. 'hostname' is the column used to join with the asset management (AM) table",
+        "Domain": "[OBRDATA].[dbo].[con_vertica_master_new]"
     },
     {
         "TableName": "BKP_Inventory",
-        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments.",
-        "Domain": "[BKP_Inventory].[dbo].[BKP_Inventory]"
+        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments. 'lPortfolioItemId' is used to link the inventory to the asset AM table and the 'PolicyName' is used to link the backup logs policy 'BKP_Logs' table",
+        "Domain": "[BACKUP].[dbo].[bkp_policy_inventory]"
     },
     {
         "TableName": "BKP_Logs",
-        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information",
-        "Domain": "[BKP_Logs].[dbo].[BKP_Logs]"
+        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information. The 'policyName' column name is used to link to the Backup Inventory table.",
+        "Domain": "[BACKUP].[dbo].[bkp_policy_logs]"
     },
     {
         "TableName": "SLA_ClosedTKT",
-        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization.",
-        "Domain": "[HPSM_Tickets].[dbo].[SLA_ClosedTKT]"
+        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization. This is independent table.",
+        "Domain": "[RILITSM].[dbo].[Ticket_SLA_TotTime_New_v2]"
     },
     {
         "TableName": "CR_Asset",
-        "Description": "Change Management tickets which contains CI names",
-        "Domain": "[HPSM_Tickets].[dbo].[CR_Asset]"
+        "Description": "Change Management tickets which contains CI names. 'DISPLAY_NAME' name is linked to the asset table using the 'hostname' column. ",
+        "Domain": "[SMDATA].[dbo].[CR_Asset]"
     }
 ]
 
@@ -42,7 +42,7 @@ global_database_model = [
     {
         "TableName": "AM",
         "Domain": "[AMDATA].[dbo].[con_am_asset_lifecycle]",
-        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle",
+        "Description": "Asset Management is a Enterprise level tool that tracks and manage the lifecycle of Assets like VM Server, Physical Server, IP Phones, Switch routers. helps organizations track, control, and optimize their IT assets across the full lifecycle. This is the central tables and other tables revolve around it. 'lPortfolioItemId' is unique value for asset but for joining with monitoring we need the 'hostname' column.",
         "Columns": [
             {
                 "ColumnName": "lPortfolioItemId",
@@ -418,8 +418,8 @@ global_database_model = [
     },
     {
         "TableName": "Monitoring",
-        "Domain": "[Monitoring].[dbo].[Monitoring]",
-        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization.",
+        "Domain": "[OBRDATA].[dbo].[con_vertica_master_new]",
+        "Description": "This tool is used by IT and operations teams to track, monitor, and manage the health, availability, and performance of IT assets across an organization. 'hostname' is the column used to join with the asset management (AM) table",
         "Columns": [
             {
                 "ColumnName": "dsi_key_id",
@@ -590,8 +590,8 @@ global_database_model = [
     },
     {
         "TableName": "BKP_Inventory",
-        "Domain": "[BKP_Inventory].[dbo].[BKP_Inventory]",
-        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments.",
+        "Domain": "[BACKUP].[dbo].[bkp_policy_inventory]",
+        "Description": "Veritas Netbackup - enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments. 'lPortfolioItemId' is used to link the inventory to the asset AM table and the 'PolicyName' is used to link the backup logs policy 'BKP_Logs' table",
         "Columns": [
             {
                 "ColumnName": "MasterServer",
@@ -662,8 +662,8 @@ global_database_model = [
     },
     {
         "TableName": "BKP_Logs",
-        "Domain": "[BKP_Logs].[dbo].[BKP_Logs]",
-        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information",
+        "Domain": "[BACKUP].[dbo].[bkp_policy_logs]",
+        "Description": "enterprise-grade backup and recovery solution used by organizations to protect, manage, and recover data across complex IT environments..Backup Inventory Log Information. The 'policyName' column name is used to link to the Backup Inventory table.",
         "Columns": [
             {
                 "ColumnName": "jobId",
@@ -1004,8 +1004,8 @@ global_database_model = [
     },
     {
         "TableName": "SLA_ClosedTKT",
-        "Domain": "[HPSM_Tickets].[dbo].[SLA_ClosedTKT]",
-        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization.",
+        "Domain": "[RILITSM].[dbo].[Ticket_SLA_TotTime_New_v2]",
+        "Description": "It\u2019s an IT Service Management (ITSM) ticketing tool used by IT teams to log, track, and manage service-related work across an organization. This is independent table.",
         "Columns": [
             {
                 "ColumnName": "INCIDENT_ID",
@@ -1336,8 +1336,8 @@ global_database_model = [
     },
     {
         "TableName": "CR_Asset",
-        "Domain": "[HPSM_Tickets].[dbo].[CR_Asset]",
-        "Description": "Change Management tickets which contains CI names",
+        "Domain": "[SMDATA].[dbo].[CR_Asset]",
+        "Description": "Change Management tickets which contains CI names. 'DISPLAY_NAME' name is linked to the asset table using the 'hostname' column. ",
         "Columns": [
             {
                 "ColumnName": "cm2rm1_NUMBER",
@@ -1361,7 +1361,7 @@ global_database_model = [
             },
             {
                 "ColumnName": "RECORD_NUMBER",
-                "Description": "record number - some number",
+                "Description": NaN,
                 "DataType": "Number"
             },
             {
