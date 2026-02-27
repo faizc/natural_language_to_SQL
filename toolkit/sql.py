@@ -8,42 +8,14 @@ username = ""
 password = ""
 driver = "{ODBC Driver 18 for SQL Server}"
 
-conn_str = (
-    f"DRIVER={driver};"
-    f"SERVER={server};"
-    f"DATABASE={database};"
-    f"UID={username};"
-    f"PWD={password};"
-    f"Encrypt=yes;"
-    f"TrustServerCertificate=no;"
-)
-
-conn_str = (
-    f"DRIVER={'SQL Server'};"
-    f"SERVER={server};"
-    f"DATABASE={database};"
-    f"USER={username};"
-    f"PASSWORD={password};"
-)
-
 ## Following connection string format worked for me - using SQL Server driver instead of ODBC Driver 18
 conn_str = (
-    f'Driver={{SQL Server}};'
+    f'Driver={driver};'
     f'Server={server};'
     f'Database={database};'
     f'UID={username};'
-    f'PWD={password};'
+    f'PWD={password};TrustServerCertificate=yes;'
 )
-
-#conn = pyodbc.connect(conn_str)
-#cursor = conn.cursor()
-#cursor.execute("SELECT @@VERSION")
-#row = cursor.fetchone()
-#print(row)
-
-
-#cursor.close()
-#conn.close()
 
 response = None
 with pyodbc.connect(conn_str) as conn:
