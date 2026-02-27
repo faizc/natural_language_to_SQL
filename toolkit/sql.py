@@ -8,7 +8,6 @@ username = ""
 password = ""
 driver = "{ODBC Driver 18 for SQL Server}"
 
-## Following connection string format worked for me - using SQL Server driver instead of ODBC Driver 18
 conn_str = (
     f'Driver={driver};'
     f'Server={server};'
